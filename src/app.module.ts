@@ -1,9 +1,7 @@
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
 import { Module } from '@nestjs/common';
-import { ProductModule } from './product/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ProductModule } from './product/product.module';
 import { DonViVanChuyenModule } from './don-vi-van-chuyen/don-vi-van-chuyen.module';
 import { HopDongGiaoDichModule } from './hop-dong-giao-dich/hop-dong-giao-dich.module';
 import { HopDongVanChuyenModule } from './hop-dong-van-chuyen/hop-dong-van-chuyen.module';
@@ -13,21 +11,26 @@ import { AccountModule } from './account/account.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ProductModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '127.0.0.1' ,
-      port:3306,
-      username:'root',
-      password: 'dauphuthanhkim00',
-      database: 'vietcycleconnectv1',
-      entities: [Product, __dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: false,
-      migrationsRun:false,
-    }),
+  imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Giúp module config được dùng toàn cục
+      isGlobal: true, // Module Config có thể dùng toàn dự án
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'mysql',
+        host: config.get<string>('DB_HOST'),
+        port: config.get<number>('DB_PORT'),
+        username: config.get<string>('DB_USER'),
+        password: config.get<string>('DB_PASSWORD'),
+        database: config.get<string>('DB_NAME'),
+        entities: [Product, __dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: false,
+        migrationsRun: false,
+      }),
+    }),
+    ProductModule,
     DonViVanChuyenModule,
     HopDongGiaoDichModule,
     HopDongVanChuyenModule,
@@ -35,7 +38,5 @@ import { AuthModule } from './auth/auth.module';
     AccountModule,
     AuthModule,
   ],
-  // controllers: [AppController],
-  // providers: [AppService],
 })
 export class AppModule {}
