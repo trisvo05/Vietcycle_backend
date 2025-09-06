@@ -21,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
       useFactory: (config: ConfigService) => ({
         type: 'mysql',
         host: config.get<string>('HOST'),
-        port: config.get<number>('PORT'),
+        port: config.get<number>('PORT') || 26715 ,
         username: config.get<string>('USERNAME'),
         password: config.get<string>('PASSWORD'),
         database: config.get<string>('DATABASE'),
