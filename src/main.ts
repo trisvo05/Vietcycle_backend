@@ -3,6 +3,13 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+
+  app.enableCors({
+    origin: "https://vietcycle-frontend.vercel.app", // cho phép frontend truy cập
+    credentials: true,               // nếu bạn có dùng cookie/session
+  });
+
+  await app.listen(1000);
 }
 bootstrap();
+
