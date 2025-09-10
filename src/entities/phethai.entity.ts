@@ -26,6 +26,11 @@ export class PheThai {
   @Column({ length: 255 })
   dia_diem_phat_sinh: string;
 
+    @Column({ type: 'float', nullable: true })
+  kinh_do: number;  // thêm trường Kinh độ
+
+    @Column({ type: 'float', nullable: true })
+  vi_do: number;  // thêm trường Kinh độ
   @Column({ length: 255 })
   phuong_phap_xu_ly: string;
 
