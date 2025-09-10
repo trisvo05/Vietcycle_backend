@@ -1,7 +1,8 @@
 // phethai.entity.ts
-import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { PheThaiBan } from './phethaiban.entity';
 import { HopDongGiaoDich } from './hopdonggiaodich.entity';
+import { Account } from './account.entity';
 
 @Entity('phethai')
 export class PheThai {
@@ -42,6 +43,11 @@ export class PheThai {
 
   @OneToMany(() => PheThaiBan, (ban) => ban.pheThai)
   pheThaiBans: PheThaiBan[];
+
+    // ====== foreign key tới account ======
+  @ManyToOne(() => Account, (account) => account.pheThais, { nullable: true })
+  @JoinColumn({ name: 'account_id' })
+  account: Account;
 
 
 }

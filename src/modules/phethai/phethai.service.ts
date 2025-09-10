@@ -40,4 +40,14 @@ export class PhethaiService {
     const phethai = await this.findOne(id);
     await this.phethaiRepository.remove(phethai);
   }
+
+
+    // Lấy phế thải theo userId
+  async getByUserId(userId: number): Promise<PheThai[]> {
+    return this.phethaiRepository.find({
+      where: { account: { id: userId } }
+      // relations: ['account'],
+    });
+  }
+
 }

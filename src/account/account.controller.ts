@@ -18,6 +18,7 @@ export class AccountController {
   async getProfile(@Req() req) {
     const userId = req.user.sub; // lấy từ payload trong JwtStrategy
     return this.AccountService.getProfile(userId);
+    // return { "usserID " : userId };
   }
 
   @Get('admin')

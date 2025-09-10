@@ -1,8 +1,9 @@
 // account.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from 'typeorm';
 import { VanChuyenProfile } from './vanchuyenprofile.entity';
 import { XuLyProfile } from './xulyprofile.entity';
 import { DoanhNghiepProfile } from './doanhnghiepprofile.entity';
+import { PheThai } from './phethai.entity';
 export enum AccountRole {
   DOANHNGHIEP = 'doanhnghiep',
   DOANHNGHIEPMUA = 'doanhnghiepmua',
@@ -54,4 +55,8 @@ export class Account {
 
   @OneToOne(() => XuLyProfile, (profile) => profile.account)
   xuLyProfile: XuLyProfile;
+
+    // ====== quan hệ 1-n với phethai ======
+  @OneToMany(() => PheThai, (phethai) => phethai.account)
+  pheThais: PheThai[];
 }
