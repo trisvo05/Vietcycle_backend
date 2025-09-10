@@ -1,18 +1,23 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { AccountRole } from './entities/account.entity';
+// import { AccountRole } from './entities/account.entity';
+import { AccountService } from './account.service';
+import { AccountRole } from 'src/entities/account.entity';
 // import { Role } from './user.entity';
 
 @Controller('account')
 export class AccountController {
+  constructor(private readonly AccountService: AccountService) {}
+
   AuthService: any;
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  getProfile(req) {
-    return { msg: 'Trang cá nhân' };
+  async getProfile(@Req() req) {
+    const userId = req.user.sub; // lấy từ payload trong JwtStrategy
+    return this.AccountService.getProfile(userId);
   }
 
   @Get('admin')
