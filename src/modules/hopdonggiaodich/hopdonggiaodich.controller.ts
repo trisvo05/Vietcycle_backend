@@ -1,34 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { HopdonggiaodichService } from './hopdonggiaodich.service';
-import { CreateHopdonggiaodichDto } from './dto/create-hopdonggiaodich.dto';
-import { UpdateHopdonggiaodichDto } from './dto/update-hopdonggiaodich.dto';
+// import { HopDongService } from './hopdong.service';
 
-@Controller('hopdonggiaodich')
+@Controller('hop-dong-giao-dich')
 export class HopdonggiaodichController {
-  constructor(private readonly hopdonggiaodichService: HopdonggiaodichService) {}
+  constructor(private readonly hopDongService: HopdonggiaodichService) {}
 
-  @Post()
-  create(@Body() createHopdonggiaodichDto: CreateHopdonggiaodichDto) {
-    return this.hopdonggiaodichService.create(createHopdonggiaodichDto);
+  @Post('tao')
+  async taoHopDong(@Body() body: any) {
+    return this.hopDongService.taoHopDong(body);
   }
 
+  @Post('xac-thuc')
+  async xacThucOtp(@Body() body: { hopDongId: number; accountId: number; otp: string }) {
+    return this.hopDongService.xacThucOtp(body.hopDongId, body.accountId, body.otp);
+  }
   @Get()
   findAll() {
-    return this.hopdonggiaodichService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.hopdonggiaodichService.findOne(id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: number, @Body() updateHopdonggiaodichDto: UpdateHopdonggiaodichDto) {
-    return this.hopdonggiaodichService.update(+id, updateHopdonggiaodichDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.hopdonggiaodichService.remove(+id);
+    return this.hopDongService.findAll();
   }
 }

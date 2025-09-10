@@ -3,14 +3,18 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 't
 import { PheThai } from './phethai.entity';
 import { Account } from './account.entity';
 import { PheThaiBan } from './phethaiban.entity';
+export enum HopDongStatus {
+  CHO_KY = 'cho_ky',
+  CO_HIEU_LUC = 'co_hieu_luc',
+}
 
 @Entity('hopdonggiaodich')
 export class HopDongGiaoDich {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  phe_thai_ban_id: number;
+//   @Column()
+//   phe_thai_ban_id: number;
 
   @Column()
   nguoi_mua_id: number;
@@ -24,11 +28,8 @@ export class HopDongGiaoDich {
   @Column({ length: 255 })
   hop_dong_url: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['cho_ky', 'co_hieu_luc'],
-  })
-  status: string;
+  @Column({ type: 'enum', enum: HopDongStatus, default: HopDongStatus.CHO_KY })
+  status: HopDongStatus;
 
   @ManyToOne(() => PheThaiBan, (phethaiban) => phethaiban.hopDongGiaoDich)
   @JoinColumn({ name: 'phe_thai_ban_id' })
