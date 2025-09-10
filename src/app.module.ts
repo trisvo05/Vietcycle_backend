@@ -7,6 +7,7 @@ import { AccountModule } from './account/account.module';
 import { AuthModule } from './auth/auth.module';
 import { PhethaiModule } from './modules/phethai/phethai.module';
 import { PhethaibanModule } from './modules/phethaiban/phethaiban.module';
+import { HopdonggiaodichModule } from './modules/hopdonggiaodich/hopdonggiaodich.module';
 
 
 @Module({
@@ -35,6 +36,7 @@ import { PhethaibanModule } from './modules/phethaiban/phethaiban.module';
     AuthModule,
     PhethaiModule,
     PhethaibanModule,
+    HopdonggiaodichModule,
   ],
 })
 export class AppModule {}

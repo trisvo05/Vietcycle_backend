@@ -43,6 +43,5 @@ export class PheThai {
   @OneToMany(() => PheThaiBan, (ban) => ban.pheThai)
   pheThaiBans: PheThaiBan[];
 
-  @OneToMany(() => HopDongGiaoDich, (hd) => hd.pheThai)
-  hopDongGiaoDich: HopDongGiaoDich[];
+
 }

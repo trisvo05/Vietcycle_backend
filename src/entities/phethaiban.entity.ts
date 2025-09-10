@@ -1,6 +1,7 @@
 // phethaiban.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { PheThai } from './phethai.entity';
+import { HopDongGiaoDich } from './hopdonggiaodich.entity';
 
 @Entity('phethaiban')
 export class PheThaiBan {
@@ -19,4 +20,7 @@ export class PheThaiBan {
   @ManyToOne(() => PheThai, (phethai) => phethai.pheThaiBans)
   @JoinColumn({ name: 'phe_thai_id' })
   pheThai: PheThai;
+
+    @OneToMany(() => HopDongGiaoDich, (hd) => hd.pheThaiBan)
+  hopDongGiaoDich: HopDongGiaoDich[];
 }
