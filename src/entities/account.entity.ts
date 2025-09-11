@@ -59,4 +59,7 @@ export class Account {
     // ====== quan hệ 1-n với phethai ======
   @OneToMany(() => PheThai, (phethai) => phethai.account)
   pheThais: PheThai[];
+
+  @OneToMany(() => PheThai, (phethai) => phethai.account)
+  phethaiban: PheThai[];
 }

@@ -17,8 +17,16 @@ export class PhethaibanService {
     return await this.pheThaiBanRepo.save(phethaiban);
   }
 
-  async findAll(): Promise<PheThaiBan[]> {
-    return await this.pheThaiBanRepo.find();
+  async getByUserId(userId: number): Promise<PheThaiBan[]> {
+    // Lấy danh sách phethaiban kèm thông tin phethai
+    return this.pheThaiBanRepo.find({
+      relations: ['pheThai'], // join phethai
+      where: {
+        pheThai: {
+          account: { id: userId }, // filter theo userID
+        },
+      },
+    });
   }
 
   async findOne(id: number): Promise<PheThaiBan> {

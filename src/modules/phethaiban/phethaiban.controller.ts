@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { PhethaibanService } from './phethaiban.service';
 import { CreatePhethaibanDto } from './dto/create-phethaiban.dto';
 import { UpdatePhethaibanDto } from './dto/update-phethaiban.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('phethaiban')
 export class PhethaibanController {
@@ -13,8 +14,11 @@ export class PhethaibanController {
   }
 
   @Get()
-  findAll() {
-    return this.phethaibanService.findAll();
+  @UseGuards(JwtAuthGuard)
+  async getMyPheThaiBan(@Req() req) {
+    const userId = req.user.userId; // lấy từ JWT payload
+    return this.phethaibanService.getByUserId(userId);
+    // return req.user.userId;
   }
 
   @Get(':id')
