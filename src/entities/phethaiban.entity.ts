@@ -26,8 +26,8 @@ export class PheThaiBan {
   hopDongGiaoDich: HopDongGiaoDich[];
 
       // ====== foreign key tới account ======
-    @ManyToOne(() => Account, (account) => account.phethaiban)
-    @JoinColumn({ name: 'account_id' })
-    account: Account;
+    // @ManyToOne(() => Account, (account) => account.phethaiban)
+    // @JoinColumn({ name: 'account_id' })
+    // account: Account;
   
 }

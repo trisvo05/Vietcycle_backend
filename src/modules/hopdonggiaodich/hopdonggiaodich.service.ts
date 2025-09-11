@@ -99,13 +99,21 @@ export class HopdonggiaodichService {
 
     return { success: true };
   }
-    async findAll(): Promise<HopDongGiaoDich[]> {
-      const hopDongList = await this.hopDongRepo.find({ relations: ['pheThaiBan'] });
-      return hopDongList.map(hd => ({
-        ...hd,
-        phe_thai_ban_id: hd.pheThaiBan.id,
-      }));
-    }
+async findAll(userId: number) {
+  return this.hopDongRepo.find({
+    relations: [
+      'pheThaiBan',
+      'pheThaiBan.pheThai',
+      'nguoiMua',
+      'nguoiBan',
+    ],
+    where: [
+      { nguoiMua: { id: userId } }, // là người mua
+      { nguoiBan: { id: userId } }, // hoặc là người bán
+    ],
+  });
+}
+
 
 
 

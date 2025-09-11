@@ -1,5 +1,6 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Req, UseGuards } from '@nestjs/common';
 import { HopdonggiaodichService } from './hopdonggiaodich.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 // import { HopDongService } from './hopdong.service';
 
 @Controller('hop-dong-giao-dich')
@@ -15,8 +16,15 @@ export class HopdonggiaodichController {
   async xacThucOtp(@Body() body: { hopDongId: number; accountId: number; otp: string }) {
     return this.hopDongService.xacThucOtp(body.hopDongId, body.accountId, body.otp);
   }
+
+
+
+  //  Xem hop dong giao dich cua minh theo payload.userId
   @Get()
-  findAll() {
-    return this.hopDongService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req) {
+    const userId = req.user.userId;
+    return this.hopDongService.findAll(userId);
+    
   }
 }

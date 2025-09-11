@@ -4,6 +4,7 @@ import { VanChuyenProfile } from './vanchuyenprofile.entity';
 import { XuLyProfile } from './xulyprofile.entity';
 import { DoanhNghiepProfile } from './doanhnghiepprofile.entity';
 import { PheThai } from './phethai.entity';
+import { PheThaiBan } from './phethaiban.entity';
 export enum AccountRole {
   DOANHNGHIEP = 'doanhnghiep',
   DOANHNGHIEPMUA = 'doanhnghiepmua',
@@ -60,6 +61,6 @@ export class Account {
   @OneToMany(() => PheThai, (phethai) => phethai.account)
   pheThais: PheThai[];
 
-  @OneToMany(() => PheThai, (phethai) => phethai.account)
-  phethaiban: PheThai[];
+  // @OneToMany(() => PheThaiBan, (phethaiban) => phethaiban.account)
+  // phethaiban: PheThaiBan[];
 }
