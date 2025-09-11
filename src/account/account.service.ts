@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from 'src/entities/account.entity';
 import { DoanhNghiepProfile } from 'src/entities/doanhnghiepprofile.entity';
@@ -33,47 +33,48 @@ export class AccountService {
     return this.accountRepository.findOne({ where: { id } });
   }
 
-async getProfile(userId: number) {
-  const account = await this.accountRepository.findOne({
-    where: { id: userId },
-    select: ['id', 'username', 'email', 'role', 'status'],
-  });
+  async getProfile(userId: number) {
+    const account = await this.accountRepository.findOne({
+      where: { id: userId },
+      select: ['id', 'username', 'email','phone' ,'role', 'status'],
+    });
 
-  if (!account) {
-    throw new NotFoundException('Account not found');
+    if (!account) {
+      throw new NotFoundException('Account not found');
+    }
+
+    let profile: any = null;
+
+    switch (account.role) {
+      case 'doanhnghiep':
+      case 'doanhnghiepmua':
+        profile = await this.doanhnghiepProfileRepository.findOne({
+          where: { account: { id: userId } },
+        });
+        break;
+
+      case 'vanchuyen':
+        profile = await this.vanchuyenProfileRepository.findOne({
+          where: { account: { id: userId } },
+        });
+        break;
+
+      case 'xuly':
+        profile = await this.xulyProfileRepository.findOne({
+          where: { account: { id: userId } },
+        });
+        break;
+
+      case 'admin':
+        profile = null; // admin không có profile riêng
+        break;
+    }
+
+    return {
+      ...account,
+      profile,
+    };
   }
 
-  let profile: any = null;
-
-  switch (account.role) {
-    case 'doanhnghiep':
-    case 'doanhnghiepmua':
-      profile = await this.doanhnghiepProfileRepository.findOne({
-        where: { account: { id: userId } },
-      });
-      break;
-
-    case 'vanchuyen':
-      profile = await this.vanchuyenProfileRepository.findOne({
-        where: { account: { id: userId } },
-      });
-      break;
-
-    case 'xuly':
-      profile = await this.xulyProfileRepository.findOne({
-        where: { account: { id: userId } },
-      });
-      break;
-
-    case 'admin':
-      profile = null; // admin không có profile riêng
-      break;
-  }
-
-  return {
-    ...account,
-    profile,
-  };
-}
 
 }

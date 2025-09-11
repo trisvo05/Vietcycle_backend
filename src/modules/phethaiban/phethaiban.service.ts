@@ -28,9 +28,13 @@ export class PhethaibanService {
       },
     });
   }
-
+  async findAll(): Promise<PheThaiBan[]> {
+    return this.pheThaiBanRepo.find({
+      relations: ['pheThai','pheThai.account.doanhNghiepProfile'], // join phethai
+    });
+  }
   async findOne(id: number): Promise<PheThaiBan> {
-    const phethaiban = await this.pheThaiBanRepo.findOne({ where: { id } });
+    const phethaiban = await this.pheThaiBanRepo.findOne({ where: { id } ,relations: ['pheThai','pheThai.account.doanhNghiepProfile']});
     if (!phethaiban) {
       throw new NotFoundException(`Phethai with ID ${id} not found`);
     }

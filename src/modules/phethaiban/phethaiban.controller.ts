@@ -8,12 +8,12 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class PhethaibanController {
   constructor(private readonly phethaibanService: PhethaibanService) {}
 
-  @Post()
+  @Post("quan-ly")
   create(@Body() createPhethaibanDto: CreatePhethaibanDto) {
     return this.phethaibanService.create(createPhethaibanDto);
   }
-
-  @Get()
+  // Lấy phế thải bán cho QUẢN LÝ PHẾ THẢI BÁN (role Doanh nghiệp)
+  @Get("quan-ly")
   @UseGuards(JwtAuthGuard)
   async getMyPheThaiBan(@Req() req) {
     const userId = req.user.userId; // lấy từ JWT payload
@@ -21,17 +21,25 @@ export class PhethaibanController {
     // return req.user.userId;
   }
 
+
+
+  // Lấy phế thải bán cho trang SẢN PHẨM PHẾ THẢI  (role user , người mua )
+
+  @Get()
+  async getPheThaiBanPublic() {
+    return this.phethaibanService.findAll();
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.phethaibanService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('quan-ly/:id')
   update(@Param('id') id: string, @Body() updatePhethaibanDto: UpdatePhethaibanDto) {
     return this.phethaibanService.update(+id, updatePhethaibanDto);
   }
 
-  @Delete(':id')
+  @Delete('quan-ly/:id')
   remove(@Param('id') id: string) {
     return this.phethaibanService.remove(+id);
   }

@@ -18,6 +18,9 @@ export class PheThaiBan {
   @Column({ length: 100 })
   khoi_luong_ban: string;
 
+    // thêm cột image
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  image: string;
   @ManyToOne(() => PheThai, (phethai) => phethai.pheThaiBans, { eager: true })
   @JoinColumn({ name: 'phe_thai_id' })
   pheThai: PheThai;

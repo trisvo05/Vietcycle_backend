@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -34,4 +34,11 @@ export class AccountController {
   getDoanhNghiepPage() {
     return { msg: 'Chỉ doanh nghiệp mới thấy' };
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Patch('profile')
+  // async updateProfile(@Req() req, @Body() updateData: any) {
+  //   const userId = req.user.userId;
+  //   return this.AccountService.updateProfile(userId, updateData);
+  // }
 }

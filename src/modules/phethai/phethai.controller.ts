@@ -8,13 +8,15 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class PhethaiController {
   constructor(private readonly phethaiService: PhethaiService) {}
 
-  @Post()
-  create(@Body() createPhethaiDto: CreatePhethaiDto) {
-    return this.phethaiService.create(createPhethaiDto);
+  @Post('quan-ly')
+  @UseGuards(JwtAuthGuard)
+  create(@Body() createPhethaiDto: CreatePhethaiDto, @Req() req) {
+    const userId = req.user.userId;
+    return this.phethaiService.create({ ...createPhethaiDto, userId });
   }
 
-  // Lấy phế thải của user hiện tại
-  @Get()
+  // Lấy phế thải của user hiện tại để quản lý 
+  @Get('quan-ly')
   @UseGuards(JwtAuthGuard)
   async getByUserId(@Req() req) {
     const userId = req.user.userId; // từ JwtStrategy
@@ -22,6 +24,8 @@ export class PhethaiController {
     // kiem tra lai payload va debug nhanh :((
   }
  
+
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
