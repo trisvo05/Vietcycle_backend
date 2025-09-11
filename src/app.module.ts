@@ -18,8 +18,8 @@ import { HopdonggiaodichModule } from './modules/hopdonggiaodich/hopdonggiaodich
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-      console.log('DB_USER:', config.get('DB_USER'));
-      console.log('DB_PASS:', config.get('DB_PASS'));
+      console.log('DB_USER:', config.get('DB_USERNAME'));
+      console.log('DB_PASS:', config.get('DB_PASSWORD'));
       return {
         type: 'mysql',
         host: config.get<string>('DB_HOST'),

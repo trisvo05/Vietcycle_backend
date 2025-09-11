@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: "http://localhost:3000", // cho phép frontend truy cập
+    origin: "https://vietcycle-backend-3.onrender.com", // cho phép frontend truy cập
     credentials: true,               // nếu bạn có dùng cookie/session
   });
 
