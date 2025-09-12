@@ -13,10 +13,15 @@ export class PhethaiService {
     private readonly phethaiRepository: Repository<PheThai>,
   ) {}
 
-  async create(createPhethaiDto: CreatePhethaiDto): Promise<PheThai> {
-    const phethai = this.phethaiRepository.create(createPhethaiDto);
-    return await this.phethaiRepository.save(phethai);
-  }
+async create(createPhethaiDto: CreatePhethaiDto, userId: number): Promise<PheThai> {
+  // Tạo entity mới, gán userId
+  const phethai = this.phethaiRepository.create({
+    ...createPhethaiDto,
+    account: { id: userId }, // gán userId thông qua quan hệ account
+  });
+
+  return await this.phethaiRepository.save(phethai);
+}
 
   async findAll(): Promise<PheThai[]> {
     return await this.phethaiRepository.find();

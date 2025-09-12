@@ -12,7 +12,7 @@ export class PhethaiController {
   @UseGuards(JwtAuthGuard)
   create(@Body() createPhethaiDto: CreatePhethaiDto, @Req() req) {
     const userId = req.user.userId;
-    return this.phethaiService.create({ ...createPhethaiDto, userId });
+    return this.phethaiService.create(createPhethaiDto, userId);
   }
 
   // Lấy phế thải của user hiện tại để quản lý 

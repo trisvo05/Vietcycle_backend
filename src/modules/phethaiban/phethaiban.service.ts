@@ -17,6 +17,7 @@ export class PhethaibanService {
     return await this.pheThaiBanRepo.save(phethaiban);
   }
 
+
   async getByUserId(userId: number): Promise<PheThaiBan[]> {
     // Lấy danh sách phethaiban kèm thông tin phethai
     return this.pheThaiBanRepo.find({

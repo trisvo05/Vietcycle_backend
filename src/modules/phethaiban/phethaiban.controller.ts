@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ForbiddenException } from '@nestjs/common';
 import { PhethaibanService } from './phethaiban.service';
 import { CreatePhethaibanDto } from './dto/create-phethaiban.dto';
 import { UpdatePhethaibanDto } from './dto/update-phethaiban.dto';
@@ -8,6 +8,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class PhethaibanController {
   constructor(private readonly phethaibanService: PhethaibanService) {}
 
+  // Tạo phế thải bán cho QUẢN LÝ
   @Post("quan-ly")
   create(@Body() createPhethaibanDto: CreatePhethaibanDto) {
     return this.phethaibanService.create(createPhethaibanDto);
