@@ -41,10 +41,14 @@ async create(createPhethaiDto: CreatePhethaiDto, userId: number): Promise<PheTha
     return await this.phethaiRepository.save(updated);
   }
 
-  async remove(id: string): Promise<void> {
+ async remove(id: string): Promise<void> {
     const phethai = await this.findOne(id);
+    if (!phethai) {
+      throw new Error('Phế thải không tồn tại');
+    }
     await this.phethaiRepository.remove(phethai);
-  }
+;
+
 
 
     // Lấy phế thải theo userId
