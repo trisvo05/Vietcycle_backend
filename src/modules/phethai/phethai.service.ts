@@ -47,7 +47,7 @@ async create(createPhethaiDto: CreatePhethaiDto, userId: number): Promise<PheTha
       throw new Error('Phế thải không tồn tại');
     }
     await this.phethaiRepository.remove(phethai);
-;
+  }
 
 
 
@@ -55,7 +55,7 @@ async create(createPhethaiDto: CreatePhethaiDto, userId: number): Promise<PheTha
   async getByUserId(userId: number): Promise<PheThai[]> {
     return this.phethaiRepository.find({
       where: { account: { id: userId } }
-      // relations: ['account'],
+      // relations: ['account'],\asadsasd
     });
   }
 
