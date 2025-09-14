@@ -24,6 +24,7 @@ export class HopdonggiaodichController {
   @UseGuards(JwtAuthGuard)
   findAll(@Req() req) {
     const userId = req.user.userId;
+    console.log("user id from tokken",userId)
     return this.hopDongService.findAll(userId);
     
   }
